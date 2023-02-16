@@ -72,19 +72,3 @@ Secrets are managed by berglas. All secrets should be created from terraform if 
 ```bash
 berglas access inna-nonprod-berglas/db_password
 ```
-
-### Bootstrapping project from scratch
-
-To setup the project from scratch you need to follow those steps. This
-
-```bash
-./scripts/init-project.sh -p nonprod -t
-```
-
-And then to enable the required gcloud services:
-
-```bash
-./scripts/gcloud-services.sh
-```
-
-A cloud run service called `[project-name]` must also exist so a dns configuration can be created. This is managed from the app repo (github repo link) But for the purposes of project startup can be anything, even a hello world docker image.
