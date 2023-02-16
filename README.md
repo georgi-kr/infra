@@ -1,4 +1,4 @@
-# Inna infra
+# Innaculator infra
 
 Infrastructure for [inna-prod] and [inna-nonprod] gcp projects.
 
