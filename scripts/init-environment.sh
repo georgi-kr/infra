@@ -35,7 +35,7 @@ echo "Setting up berglas"
 berglas bootstrap \
   --project $PROJECT \
   --bucket $PROJECT-$ENVIRONMENT-berglas \
-  --bucket-location europe-west1 \
+  --bucket-location us-west1-a \
   --kms-key berglas-key-$ENVIRONMENT \
   --kms-keyring berglas \
-  --kms-location europe-west1
+  --kms-location us-west1-a

@@ -27,10 +27,10 @@ echo "Setting up berglas"
 berglas bootstrap \
   --project $PROJECT \
   --bucket $PROJECT-berglas \
-  --bucket-location europe-west1 \
+  --bucket-location us-west1-a \
   --kms-key berglas-key \
   --kms-keyring berglas \
-  --kms-location europe-west1
+  --kms-location us-west1-a
 
 echo "Creating tf-state bucket"
-gsutil mb -b on -l europe-west1 gs://$PROJECT-tf-state
+gsutil mb -b on -l us-west1-a gs://$PROJECT-tf-state

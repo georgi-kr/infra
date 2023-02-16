@@ -16,7 +16,7 @@ resource "google_sql_database_instance" "inna_db_instance" {
   settings {
     tier              = var.inna_db.tier
     disk_autoresize   = true
-    availability_type = "ZONAL"
+    availability_type = "REGIONAL"
 
     database_flags {
       name  = "log_min_duration_statement"
@@ -73,119 +73,120 @@ resource "berglas_secret" "inna_db_password" {
   plaintext = random_password.inna_db_sql_user_password[count.index].result
 }
 
-# CircleCI User
-# -----------------------------------------------------------------------------
+## TODO GENERATE USERS FOR GITHUB ACTIONS CI/CD example below for Circle CI
+# # CircleCI User
+# # -----------------------------------------------------------------------------
 
-# A service user user for deployment from CircleCI
-# Needs to create / destroy buckets, create / destroy sql databases and deploy to cloudrun
+# # A service user user for deployment from CircleCI
+# # Needs to create / destroy buckets, create / destroy sql databases and deploy to cloudrun
 
-resource "google_service_account" "inna_circleci" {
-  project      = var.project
-  account_id   = "inna-circleci"
-  display_name = "inna user for deployment from CircleCI"
-}
+# resource "google_service_account" "inna_circleci" {
+#   project      = var.project
+#   account_id   = "inna-circleci"
+#   display_name = "inna user for deployment from CircleCI"
+# }
 
-resource "google_project_iam_member" "inna_circleci_storage_admin" {
-  project = var.project
-  role    = "roles/storage.admin"
-  member  = "serviceAccount:${google_service_account.inna_circleci.email}"
-}
+# resource "google_project_iam_member" "inna_circleci_storage_admin" {
+#   project = var.project
+#   role    = "roles/storage.admin"
+#   member  = "serviceAccount:${google_service_account.inna_circleci.email}"
+# }
 
-resource "google_project_iam_member" "inna_circleci_storage_viewer" {
-  project = var.project
-  role    = "roles/storage.objectViewer"
-  member  = "serviceAccount:${google_service_account.inna_circleci.email}"
-}
+# resource "google_project_iam_member" "inna_circleci_storage_viewer" {
+#   project = var.project
+#   role    = "roles/storage.objectViewer"
+#   member  = "serviceAccount:${google_service_account.inna_circleci.email}"
+# }
 
-resource "google_project_iam_member" "inna_circleci_k8s_admin" {
-  project = var.project
-  role    = "roles/container.admin"
-  member  = "serviceAccount:${google_service_account.inna_circleci.email}"
-}
+# resource "google_project_iam_member" "inna_circleci_k8s_admin" {
+#   project = var.project
+#   role    = "roles/container.admin"
+#   member  = "serviceAccount:${google_service_account.inna_circleci.email}"
+# }
 
-resource "google_project_iam_member" "inna_circleci_k8s_service_user" {
-  project = var.project
-  role    = "roles/iam.serviceAccountUser"
-  member  = "serviceAccount:${google_service_account.inna_circleci.email}"
-}
+# resource "google_project_iam_member" "inna_circleci_k8s_service_user" {
+#   project = var.project
+#   role    = "roles/iam.serviceAccountUser"
+#   member  = "serviceAccount:${google_service_account.inna_circleci.email}"
+# }
 
-resource "google_project_iam_member" "inna_circleci_view_cluster" {
-  project = var.project
-  role    = "roles/compute.networkViewer"
-  member  = "serviceAccount:${google_service_account.inna_circleci.email}"
-}
+# resource "google_project_iam_member" "inna_circleci_view_cluster" {
+#   project = var.project
+#   role    = "roles/compute.networkViewer"
+#   member  = "serviceAccount:${google_service_account.inna_circleci.email}"
+# }
 
-resource "google_project_iam_member" "inna_circleci_read_dns" {
-  project = var.project
-  role    = "roles/dns.reader"
-  member  = "serviceAccount:${google_service_account.inna_circleci.email}"
-}
+# resource "google_project_iam_member" "inna_circleci_read_dns" {
+#   project = var.project
+#   role    = "roles/dns.reader"
+#   member  = "serviceAccount:${google_service_account.inna_circleci.email}"
+# }
 
-resource "google_project_iam_member" "inna_circleci_sql" {
-  project = var.project
-  role    = "roles/cloudsql.editor"
-  member  = "serviceAccount:${google_service_account.inna_circleci.email}"
-}
+# resource "google_project_iam_member" "inna_circleci_sql" {
+#   project = var.project
+#   role    = "roles/cloudsql.editor"
+#   member  = "serviceAccount:${google_service_account.inna_circleci.email}"
+# }
 
-resource "google_project_iam_member" "inna_circleci_service_user_admin" {
-  project = var.project
-  role    = "roles/iam.serviceAccountAdmin"
-  member  = "serviceAccount:${google_service_account.inna_circleci.email}"
-}
+# resource "google_project_iam_member" "inna_circleci_service_user_admin" {
+#   project = var.project
+#   role    = "roles/iam.serviceAccountAdmin"
+#   member  = "serviceAccount:${google_service_account.inna_circleci.email}"
+# }
 
-resource "google_project_iam_member" "inna_circleci_admin_dns" {
-  project = var.project
-  role    = "roles/dns.admin"
-  member  = "serviceAccount:${google_service_account.inna_circleci.email}"
-}
+# resource "google_project_iam_member" "inna_circleci_admin_dns" {
+#   project = var.project
+#   role    = "roles/dns.admin"
+#   member  = "serviceAccount:${google_service_account.inna_circleci.email}"
+# }
 
-resource "google_project_iam_member" "inna_circleci_key_creator" {
-  project = var.project
-  role    = "roles/iam.serviceAccountKeyAdmin"
-  member  = "serviceAccount:${google_service_account.inna_circleci.email}"
-}
+# resource "google_project_iam_member" "inna_circleci_key_creator" {
+#   project = var.project
+#   role    = "roles/iam.serviceAccountKeyAdmin"
+#   member  = "serviceAccount:${google_service_account.inna_circleci.email}"
+# }
 
-resource "google_service_account_iam_member" "admin-account-iam" {
-  service_account_id = google_service_account.inna.name
-  role               = "roles/iam.serviceAccountUser"
-  member             = "serviceAccount:${google_service_account.inna_circleci.email}"
-}
+# resource "google_service_account_iam_member" "admin-account-iam" {
+#   service_account_id = google_service_account.inna.name
+#   role               = "roles/iam.serviceAccountUser"
+#   member             = "serviceAccount:${google_service_account.inna_circleci.email}"
+# }
 
-resource "google_project_iam_member" "inna_circleci_compute_admin_public_ip" {
-  project = var.project
-  role    = "roles/compute.publicIpAdmin"
-  member  = "serviceAccount:${google_service_account.inna_circleci.email}"
-}
+# resource "google_project_iam_member" "inna_circleci_compute_admin_public_ip" {
+#   project = var.project
+#   role    = "roles/compute.publicIpAdmin"
+#   member  = "serviceAccount:${google_service_account.inna_circleci.email}"
+# }
 
-# We manually add the permissions for the secrets bucket that a `berglas grant` call would have done
-# https://github.com/GoogleCloudPlatform/berglas#cloud-storage-storage-1
-resource "google_storage_bucket_iam_member" "inna_circleci_berglas" {
-  count  = length(var.berglas)
-  bucket = var.berglas[count.index].bucket
-  role   = "roles/storage.objectViewer"
-  member = "serviceAccount:${google_service_account.inna_circleci.email}"
-}
+# # We manually add the permissions for the secrets bucket that a `berglas grant` call would have done
+# # https://github.com/GoogleCloudPlatform/berglas#cloud-storage-storage-1
+# resource "google_storage_bucket_iam_member" "inna_circleci_berglas" {
+#   count  = length(var.berglas)
+#   bucket = var.berglas[count.index].bucket
+#   role   = "roles/storage.objectViewer"
+#   member = "serviceAccount:${google_service_account.inna_circleci.email}"
+# }
 
-# We manually add the permissions for berglas kms key that a `berglas grant` call would have done
-# https://github.com/GoogleCloudPlatform/berglas#cloud-storage-storage-1
-resource "google_kms_crypto_key_iam_member" "inna_circleci_berglas" {
-  count         = length(var.berglas)
-  crypto_key_id = var.berglas[count.index].key
-  role          = "roles/cloudkms.cryptoKeyDecrypter"
-  member        = "serviceAccount:${google_service_account.inna_circleci.email}"
-}
+# # We manually add the permissions for berglas kms key that a `berglas grant` call would have done
+# # https://github.com/GoogleCloudPlatform/berglas#cloud-storage-storage-1
+# resource "google_kms_crypto_key_iam_member" "inna_circleci_berglas" {
+#   count         = length(var.berglas)
+#   crypto_key_id = var.berglas[count.index].key
+#   role          = "roles/cloudkms.cryptoKeyDecrypter"
+#   member        = "serviceAccount:${google_service_account.inna_circleci.email}"
+# }
 
-resource "google_service_account_key" "inna_circleci_key" {
-  service_account_id = google_service_account.inna_circleci.name
-}
+# resource "google_service_account_key" "inna_circleci_key" {
+#   service_account_id = google_service_account.inna_circleci.name
+# }
 
-resource "berglas_secret" "inna_circleci" {
-  count     = length(var.berglas)
-  bucket    = var.berglas[count.index].bucket
-  key       = var.berglas[count.index].key
-  name      = "inna_circleci_domain_credentials"
-  plaintext = base64decode(google_service_account_key.inna_circleci_key.private_key)
-}
+# resource "berglas_secret" "inna_circleci" {
+#   count     = length(var.berglas)
+#   bucket    = var.berglas[count.index].bucket
+#   key       = var.berglas[count.index].key
+#   name      = "inna_circleci_domain_credentials"
+#   plaintext = base64decode(google_service_account_key.inna_circleci_key.private_key)
+# }
 
 # Execution Service Account
 # -----------------------------------------------------------------------------

@@ -31,12 +31,12 @@ variable "berglas" {
 
   An array for configuration for berglas, docs: https://github.com/GoogleCloudPlatform/berglas"
 
-    key: The full path to the berglas kms key, for example: 'projects/schemes-nonprod/locations/europe-west1/keyRings/berglas/cryptoKeys/berglas-key'
+    key: The full path to the berglas kms key, for example: 'projects/schemes-nonprod/locations/us-west1-a/keyRings/berglas/cryptoKeys/berglas-key'
     bucket: The name of the bucket where berglas secrets will be stored.
     env: Environment suffix, used to differentiate between them for small amount of resources
 
   This would be displayed when bootstrapping berglas with
 
-    berglas bootstrap --project $PROJECT --bucket $BUCKET --bucket-location europe-west1 --kms-location europe-west1
+    berglas bootstrap --project $PROJECT --bucket $BUCKET --bucket-location us-west1-a --kms-location us-west1-a
 BERGLAS
 }

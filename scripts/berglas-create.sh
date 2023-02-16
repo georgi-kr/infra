@@ -8,18 +8,18 @@
 #
 # Would result in:
 #
-#   berglas create --key projects/nonprod/locations/europe-west1/keyRings/berglas/cryptoKeys/berglas-key nonprod-berglas/<<secret-name>> '<<secret-value>>'
+#   berglas create --key projects/nonprod/locations/us-west1-a/keyRings/berglas/cryptoKeys/berglas-key nonprod-berglas/<<secret-name>> '<<secret-value>>'
 
 
 case $1 in
 
   nonprod)
-    KEY=projects/nonprod/locations/europe-west1/keyRings/berglas/cryptoKeys/berglas-key
+    KEY=projects/nonprod/locations/us-west1-a/keyRings/berglas/cryptoKeys/berglas-key
     BUCKET=nonprod-berglas
     ;;
 
   prod)
-    KEY=projects/prod/locations/europe-west1/keyRings/berglas/cryptoKeys/berglas-key
+    KEY=projects/prod/locations/us-west1-a/keyRings/berglas/cryptoKeys/berglas-key
     BUCKET=prod-berglas
     ;;
 

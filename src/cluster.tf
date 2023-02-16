@@ -64,7 +64,7 @@ resource "google_container_node_pool" "main" {
 }
 
 # Configure Cloud NAT
-# Since we need to pull images from sources other than GCR
+# Since we need to pull images from sources other than GCR, this is needed for external docker images that will need to run in the same cluster
 # https://stackoverflow.com/questions/57664657/access-non-gcr-public-container-registry-from-private-gke-cluster
 
 resource "google_compute_router" "nat" {
@@ -92,6 +92,7 @@ resource "kubernetes_namespace" "cert_manager" {
   }
 }
 
+# TODO reasearch on helm and cert_menager
 resource "helm_release" "cert_manager" {
   name       = "cert-manager"
   repository = "https://charts.jetstack.io"
