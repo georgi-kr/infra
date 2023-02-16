@@ -4,7 +4,7 @@ Infrastructure for [inna-prod] and [inna-nonprod] gcp projects.
 
 ## Links
 
-- App:
+- App: #link to the app source code
 
 ## Getting Started
 
@@ -71,29 +71,6 @@ Secrets are managed by berglas. All secrets should be created from terraform if 
 
 ```bash
 berglas access inna-nonprod-berglas/db_password
-```
-
-## Create aiven token
-
-You can use the helper `berglas-create.sh` script. It will pass any additional arguments to the `berglas access` command
-
-```bash
-script/berglas-create.sh inna-nonprod some_secret 'some secret value'
-script/berglas-create.sh inna-prod some_secret 'some secret value'
-```
-
-Or use `berglas access` directly to create the secret for inna-nonprod project:
-
-```bash
-berglas create inna-nonprod-berglas/some_secret 'some secret value' \
-  --key projects/inna-nonprod/locations/europe-west1/keyRings/berglas/cryptoKeys/berglas-key
-```
-
-And for inna-prod project:
-
-```bash
-berglas create inna-prod-berglas/some_secret 'some secret value' \
-  --key projects/inna-prod/locations/europe-west1/keyRings/berglas/cryptoKeys/berglas-key
 ```
 
 ### Bootstrapping project from scratch
